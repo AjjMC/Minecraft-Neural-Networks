@@ -1,0 +1,4 @@
+/advancements/
+/playerdata/
+/poi/
+/stats/

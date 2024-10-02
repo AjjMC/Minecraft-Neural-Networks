@@ -1,0 +1,1 @@
+execute if entity @e[type=minecraft:marker,tag=ajjnn.canvas] run function ajjnn:control/demo/main
