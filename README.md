@@ -1,6 +1,6 @@
 # Minecraft Neural Networks
 
-> **AVAILABLE ON 1.21**
+> **AVAILABLE ON 1.21.2**
 >
 > **Please report any bugs in the issues section.**
 
