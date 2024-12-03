@@ -1,6 +1,6 @@
 # Minecraft Neural Networks
 
-> **AVAILABLE ON 1.21.3**
+> **AVAILABLE ON 1.21.4**
 >
 > **[CLICK HERE TO DOWNLOAD](https://github.com/AjjMC/Minecraft-Neural-Networks/archive/refs/heads/main.zip)**
 >
