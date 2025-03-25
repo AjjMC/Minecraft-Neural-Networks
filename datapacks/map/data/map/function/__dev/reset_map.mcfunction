@@ -31,4 +31,4 @@ data modify storage ajjnn:data input set value []
 execute positioned 3 63 3 as @n[type=minecraft:marker,tag=ajjgui.gui_origin] run data modify entity @s data.gui[0] set from storage map:reset_guis settings[0]
 function ajjgui:_reload
 
-tellraw @s {"text":"Reset map","color":"light_purple"}
+tellraw @s {text:"Reset map",color:"light_purple"}

@@ -1,12 +1,12 @@
 # A Neural Network Deployment Library for Minecraft Mapmaking
 
-> **AVAILABLE ON 1.21.4**
+> **AVAILABLE ON 1.21.5**
 >
 > **[CLICK HERE TO DOWNLOAD](https://github.com/AjjMC/ajjnn/archive/refs/heads/main.zip)**
 >
 > **Also available on [Modrinth](https://modrinth.com/datapack/ajjnn) and [Planet Minecraft](https://www.planetminecraft.com/data-pack/ajjnn/). Please support the project by starring, following, etc. on the respective platforms!**
 >
-> **Please report any bugs in the issues section.**
+> **For any queries, please use the issues section.**
 
 <p align = "center">
   <img src="repo/demo_digits.gif" width="250">
@@ -23,7 +23,7 @@ This datapack allows mapmakers to deploy neural networks of arbitrary widths and
 
 ## Installing
 
-After this folder has been added to the "datapacks" folder of a Minecraft world, ``/reload`` needs to be run in-game. A list of the datapack's commands is available via ``/function ajjnn:__help``. By convention, all functions run directly by the mapmaker start with two underscores. Functions starting with a single underscore are aliases that do not give any feedback messages in the chat. These are meant to be used by the mapmaker as part of their own map's datapack. Any functions not listed here are internal and are not meant to be used.
+After this datapack has been added to the "datapacks" folder of a Minecraft world, ``/reload`` needs to be run in-game. A list of the datapack's commands is available via ``/function ajjnn:__help``. By convention, all functions run directly by the mapmaker start with two underscores. Functions starting with a single underscore are aliases that do not give any feedback messages in the chat. These are meant to be used by the mapmaker as part of their own map's datapack. Any functions not listed here are internal and are not meant to be used.
 
 | Function                                 | Description                                          |
 |:-----------------------------------------|:-----------------------------------------------------|
@@ -46,15 +46,7 @@ The datapack can be installed by running ``/function ajjnn:__install``. It can b
 
 ## Converting Models
 
-The datapack is limited to neural networks trained in PyTorch using ``torch.nn.Sequential``. The following layers are supported at the moment:
-
-| Datapack Layer | Pytorch Layer Based On   |
-|:---------------|:-------------------------|
-| Hard Sigmoid   | ``torch.nn.HardSigmoid`` |
-| Linear         | ``torch.nn.Linear``      |
-| ReLU           | ``torch.nn.ReLU``        |
-
-The provided Python script ``convert.py`` maps the PyTorch layers on the right to the datapack layers on the left. Dropout layers ``torch.nn.Dropout``, used during the training process, are skipped, and an argmax function can be optionally applied by the script in the last layer, useful for classification models. The model parameters are rounded to a three decimal point precision to be compatible with the datapack's floating point arithmetic. Due to the large number of command executions involved, the number of input features and network width cannot exceed 784. However, there is no limit to network depth. The number of ticks a forward pass takes increases with both the width and the depth of the network but not with the number of input features. All converted models are automatically stored in ``./data/ajjnn/functions/models/`` as ``<model name>.mcfunction``, where the name can be specified. They can then be loaded with ``/function ajjnn:__load {model:<model name>}``.
+The datapack is limited to neural networks trained in PyTorch using ``torch.nn.Sequential``. At the moment, ``torch.nn.Linear`` is the only supported layer, along with the activation functions ``torch.nn.ReLU`` and ``torch.nn.HardSigmoid``. The provided Python script ``convert.py`` converts a PyTorch model to an mcfunction file, creating an NBT tag structure. Dropout layers ``torch.nn.Dropout``, used during the training process, are skipped, and an argmax function can be optionally applied by the script after the last layer, useful for classification models. The model parameters are rounded to a three decimal point precision to be compatible with the datapack's floating point arithmetic. Due to the large number of command executions involved, the number of input features and network width cannot exceed 784. However, there is no limit to network depth. The number of ticks a forward pass takes increases with both the width and the depth of the network but not with the number of input features. All converted models are automatically stored in ``./data/ajjnn/functions/models/`` as ``<model name>.mcfunction``, where the name can be specified. They can then be loaded with ``/function ajjnn:__load {model:<model name>}``.
 
 ## Available Demos
 
