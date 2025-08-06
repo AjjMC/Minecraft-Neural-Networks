@@ -2,7 +2,7 @@
 
 > **AVAILABLE ON 1.21.5**
 >
-> **CLICK [HERE](https://github.com/AjjMC/Minecraft-Neural-Networks/archive/refs/heads/main.zip) TO DOWNLOAD**
+> **Click [here](https://github.com/AjjMC/Minecraft-Neural-Networks/archive/refs/heads/main.zip) to download.**
 >
 > **For any queries, please use the issues section.**
 
