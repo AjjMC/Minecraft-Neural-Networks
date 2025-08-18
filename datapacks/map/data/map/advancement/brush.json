@@ -1,0 +1,17 @@
+{
+    "criteria": {
+        "requirement": {
+            "trigger": "minecraft:using_item",
+            "conditions": {
+                "item": {
+                    "predicates": {
+                        "minecraft:custom_data": "{map:{brush:1b}}"
+                    }
+                }
+            }
+        }
+    },
+    "rewards": {
+        "function": "map:demo/init_draw_canvas"
+    }
+}
