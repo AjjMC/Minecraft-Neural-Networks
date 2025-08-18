@@ -33,14 +33,6 @@ fill 9 65 42 -10 84 40 minecraft:air
 
 function map:demo/select_digits_model
 
-data modify storage ajjnn:data in set value []
-data modify storage ajjnn:data model_name set value ""
-data modify storage ajjnn:data modules set value []
-data modify storage ajjnn:data num_params set value 0
-data modify storage ajjnn:data out set value []
-data modify storage ajjnn:data status set value 0b
-data modify storage ajjnn:data values set value []
-
 data remove storage map:data args
 data remove storage map:data decoded
 data remove storage map:data out
