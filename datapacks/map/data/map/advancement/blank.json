@@ -1,17 +1,17 @@
 {
-    "criteria": {
-        "requirement": {
-            "trigger": "minecraft:using_item",
-            "conditions": {
-                "item": {
-                    "predicates": {
-                        "minecraft:custom_data": "{map:{blank:1b}}"
-                    }
-                }
-            }
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "item": {
+          "predicates": {
+            "minecraft:custom_data": "{map:{blank:1b}}"
+          }
         }
-    },
-    "rewards": {
-        "function": "map:demo/clear_canvas"
+      }
     }
+  },
+  "rewards": {
+    "function": "map:demo/clear_canvas"
+  }
 }
