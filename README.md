@@ -14,4 +14,6 @@
   <img src="repo/general/thumbnail.png" width="100%">
 </p>
 
-A map showcasing different AI models for handwritten character classification, based on neural networks. Demos are provided by the [ajjnn library](https://github.com/AjjMC/ajjnn).
+## Overview
+
+A map showcasing different AI models for handwritten character classification based on neural networks. Demos are provided by the [ajjnn library](https://github.com/AjjMC/ajjnn).
