@@ -16,4 +16,15 @@
 
 ## Overview
 
-A map showcasing different AI models for handwritten character classification based on neural networks. Demos are provided by the [ajjnn library](https://github.com/AjjMC/ajjnn).
+Neural Networks is a map with interactive AI systems for reading handwritten digits and letters drawn on a canvas. This is achieved using AI models trained IRL on image classification, which were engineered for use in the game.
+
+## Demo
+
+- The hotbar contains tools for interacting with the canvas.
+- Outputs are shown as characters are being drawn.
+- There are three AI models available in the settings.
+
+## Acknowledgement
+
+- [ajjnn datapack](https://github.com/AjjMC/ajjnn)
+- [EMNIST dataset](https://www.nist.gov/itl/products-and-services/emnist-dataset)

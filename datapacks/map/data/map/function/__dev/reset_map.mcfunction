@@ -33,12 +33,7 @@ fill 9 65 42 -10 84 40 minecraft:air
 
 function map:demo/select_digits_model
 
-data remove storage map:data args
-data remove storage map:data decoded
-data remove storage map:data out
-data remove storage map:data values
-
-execute positioned 3 63 3 as @n[type=minecraft:marker,tag=ajjgui.gui_origin] run data modify entity @s data.gui[0] set from storage map:reset_guis settings[0]
+execute positioned 3 63 3 as @n[type=minecraft:marker,tag=ajjgui.gui_origin] run data modify entity @s data.gui[0] set from storage map:data default_gui.settings[0]
 function ajjgui:_reload
 
-tellraw @s {text:"Reset map",color:"light_purple"}
+tellraw @s {text:"Reset Map",color:"light_purple"}

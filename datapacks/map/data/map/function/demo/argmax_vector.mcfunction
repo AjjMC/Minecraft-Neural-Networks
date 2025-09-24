@@ -6,6 +6,7 @@ execute if score #count map.global < #length map.global run function map:demo/ar
 
 data modify storage map:data args.element set from storage map:data out
 function map:demo/eliminate_vector_element with storage map:data args
+data remove storage map:data args
 
 execute if data storage ajjnn:data {model_name:"demo_digits"} run function map:demo/decode_digits
 execute if data storage ajjnn:data {model_name:"demo_letters"} run function map:demo/decode_letters
