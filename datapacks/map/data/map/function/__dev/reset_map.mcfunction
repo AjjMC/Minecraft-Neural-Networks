@@ -36,4 +36,4 @@ function map:demo/select_digits_model
 execute positioned 3 63 3 as @n[type=minecraft:marker,tag=ajjgui.gui_origin] run data modify entity @s data.gui[0] set from storage map:data default_gui.settings[0]
 function ajjgui:_reload
 
-tellraw @s {text:"Reset Map",color:"light_purple"}
+tellraw @s {text:"Reset Neural Networks",color:"light_purple"}
