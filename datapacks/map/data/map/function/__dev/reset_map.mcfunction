@@ -8,6 +8,7 @@ gamerule doWeatherCycle false
 gamerule fallDamage false
 gamerule keepInventory true
 gamerule locatorBar false
+gamerule pvp false
 gamerule reducedDebugInfo false
 gamerule sendCommandFeedback false
 gamerule showDeathMessages true
