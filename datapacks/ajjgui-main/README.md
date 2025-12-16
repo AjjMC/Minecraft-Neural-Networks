@@ -1,6 +1,6 @@
 # A Data-Driven GUI Library for Minecraft Mapmaking
 
-> **AVAILABLE ON 1.21.9**
+> **AVAILABLE ON 1.21.11**
 >
 > **Click [here](https://github.com/AjjMC/ajjgui/archive/refs/heads/main.zip) to download.**
 >
@@ -18,17 +18,18 @@
 
 ## Overview
 
-This datapack allows mapmakers to create and maintain complex and robust item-based GUIs in-game. This is achieved by simply dragging and dropping items with custom SNBT in containers within a world, which the datapack can use to generate GUIs. It functions as a black box that allows each item to act as a graphical widget with predefined properties, without requiring any modifications to be made or additional code to be implemented. Two types of GUIs can be created:
+This datapack allows mapmakers to create and maintain complex and robust item-based GUIs in-game. This is achieved by dragging and dropping items with custom SNBT in containers within a world, which the datapack can use to generate GUIs. It functions as a black box that treats each item as a graphical widget with predefined properties, and the user is not expected to modify any files. Two types of GUIs can be created:
 
 * **Block Entity GUIs:** Placed at a fixed position and shared by all players. These are generated upon compilation.
 * **Chest Boat GUIs:** Retrieved from a database and accessible anywhere by specified players only. These are obtained directly from the above by [porting GUIs to players](#porting-guis-to-players).
 
-The datapack provides the following features:
+Benefits:
 
-* SNBT standard for quick and easy creation of advanced item-based GUIs
-* Completely in-game workflow, with the entire datapack being a black box that the mapmaker can ignore
-* Robust design, support for multiplayer, including personalized GUIs, and no interference with player inventories
-* Complete documentation, in-game tutorial and demos
+* SNBT standard for quick and easy creation of advanced item-based GUIs.
+* Completely in-game workflow, with the entire datapack being a black box that the mapmaker can ignore.
+* Robust design, support for multiplayer, including personalized GUIs, and no interference with player inventories.
+* Complete documentation, in-game tutorial, and demos.
+* 4+ years of continuous maintenance, built with the most up-to-date practices, and powering prominent maps officially featured on Minecraft Realms.
 
 ## Installing
 
@@ -82,7 +83,7 @@ An in-game tutorial on how to create a GUI is available via ``/function ajjgui:_
 > [!TIP]
 > Some of the following commands are too long to fit in the chat box and need to be executed using a command block.
 
-> [!WARNING]
+> [!IMPORTANT]
 > For custom SNBT, it is important to check that the right data types are being used (e.g., ``{ajjgui:{exit:1b}}`` and not ``{ajjgui:{exit:1}}``), that values are within the specified range (e.g., ``{ajjgui:{exit:1b}}`` and not ``{ajjgui:{exit:2b}}``, where ``ajjgui.exit`` here can only be ``0b`` or ``1b``). The GUI compiler is only capable of initializing required SNBT with default values and does not correct errors. While there are cases where errors in custom SNBT, such as incorrect data types, may be internally resolved by the datapack at later stages, this behavior is inconsistent and must not be assumed.
 
 > [!NOTE]
@@ -183,10 +184,10 @@ where N is the number of states.
     /give @p minecraft:black_stained_glass_pane[minecraft:custom_data={ajjgui:{widget:"counter",values:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]}},minecraft:custom_name={text:"Counter Value",italic:0b}] 64
     ```
 
-4. A *counter* repeating the sequence 1 to 16, starting with 16. The default value is the same as the first value in ``ajjgui.values`` (now rearranged). The value of ``ajjgui.state`` is set to ``1`` to match the states:
+4. A *counter* repeating the sequence 1 to 16, starting with 16. The default value is the same as the first value in ``ajjgui.values`` (now rearranged). The value of ``ajjgui.state`` is set to ``15`` to match the state:
 
     ```
-    /give @p minecraft:black_stained_glass_pane[minecraft:custom_data={ajjgui:{widget:"counter",values:[16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],state:1}},minecraft:custom_name={text:"Counter Value",italic:0b}] 16
+    /give @p minecraft:black_stained_glass_pane[minecraft:custom_data={ajjgui:{widget:"counter",values:[16,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],state:15}},minecraft:custom_name={text:"Counter Value",italic:0b}] 16
     ```
 
 <p align = "center">
@@ -240,7 +241,7 @@ where N is the number of states.
     /give @p minecraft:magenta_dye[minecraft:custom_data={ajjgui:{widget:"switch",items:[{id:"minecraft:gray_dye",count:1,components:{"minecraft:custom_name":{text:"State 0",italic:0b}}},{id:"minecraft:lime_dye",count:1,components:{"minecraft:custom_name":{text:"State 1",italic:0b}}}]}},minecraft:custom_name={text:"Default",italic:0b}]
     ```
 
-4. A *switch* changing between a "State 0" and a "State 1" state, starting with "State 1". The default item is the same as the first item in ``ajjgui.items`` (now rearranged). The value of ``ajjgui.state`` is set to ``1`` to match the states:
+4. A *switch* changing between a "State 0" and a "State 1" state, starting with "State 1". The default item is the same as the first item in ``ajjgui.items`` (now rearranged). The value of ``ajjgui.state`` is set to ``1`` to match the state:
 
     ```
     /give @p minecraft:lime_dye[minecraft:custom_data={ajjgui:{widget:"switch",items:[{id:"minecraft:lime_dye",count:1,components:{"minecraft:custom_name":{text:"State 1",italic:0b}}},{id:"minecraft:gray_dye",count:1,components:{"minecraft:custom_name":{text:"State 0",italic:0b}}},{id:"minecraft:purple_dye",count:1,components:{"minecraft:custom_name":{text:"State 2",italic:0b}}}],state:1}},minecraft:custom_name={text:"State 1",italic:0b}]
@@ -291,7 +292,7 @@ The *radiobutton* is a widget that changes between a disabled and an enabled sta
     /give @p minecraft:magenta_dye[minecraft:custom_data={ajjgui:{widget:"radiobutton",disabled:{id:"minecraft:gray_dye",count:1,components:{"minecraft:custom_name":{text:"Disabled",italic:0b}}},enabled:{id:"minecraft:lime_dye",count:1,components:{"minecraft:custom_name":{text:"Enabled",italic:0b}}},group:0b}},minecraft:custom_name={text:"Default",italic:0b}]
     ```
 
-3. A *radiobutton* on group 0 changing between a "Disabled" and an "Enabled" state, starting with "Enabled". The value of ``ajjgui.state`` is set to ``1`` to match the states:
+3. A *radiobutton* on group 0 changing between a "Disabled" and an "Enabled" state, starting with "Enabled". The value of ``ajjgui.state`` is set to ``1`` to match the state:
 
     ```
     /give @p minecraft:lime_dye[minecraft:custom_data={ajjgui:{widget:"radiobutton",disabled:{id:"minecraft:gray_dye",count:1,components:{"minecraft:custom_name":{text:"Disabled",italic:0b}}},enabled:{id:"minecraft:lime_dye",count:1,components:{"minecraft:custom_name":{text:"Enabled",italic:0b}}},group:0b,state:1}},minecraft:custom_name={text:"Enabled",italic:0b}]
@@ -503,6 +504,9 @@ A *button* exiting the GUI:
 /give @p minecraft:barrier[minecraft:custom_data={ajjgui:{widget:"button",exit:1b}},minecraft:custom_name={text:"Exit",italic:0b},minecraft:rarity=common]
 ```
 
+> [!IMPORTANT]
+> When this functionality is used in block entity GUIs, it causes the block above to be removed.
+
 ## Porting GUIs to Players
 
 Compiled GUIs can create copies for specific players. ``/function ajjgui:__port {player:<player_uuid>,id:<gui_id>}`` ports the nearest GUI to a player, to be accessed using ``/function ajjgui:__open {player:<player_uuid>,id:<gui_id>}``. Both commands receive two macro arguments: a player UUID "player", as an Int array, and a GUI ID "id", different for each GUI of the same player. The UUID of the executing player is instead used with ``/function ajjgui:__portself {id:<gui_id>}`` and ``/function ajjgui:__openself {id:<gui_id>}``, which only require a GUI ID.
@@ -633,13 +637,13 @@ There is a marker entity with the scoreboard tag ``"ajjgui.gui_origin"`` for blo
 
     In this example, ``/function ajjgui:_reload`` is not required.
 
-> [!WARNING]
+> [!IMPORTANT]
 > If a GUI is not reloaded as specified above, the datapack assumes that a player is interacting indefinitely with it, causing other active GUIs to malfunction.
 
-> [!WARNING]
+> [!IMPORTANT]
 > The GUI compiler adds the ``ajjgui.meta`` SNBT to each widget. This must not be changed when modifying SNBT post-compilation.
 
-> [!WARNING]
+> [!IMPORTANT]
 > This section explains how widgets can be modified after compilation, when required SNBT have already been initialized with default values. Creating widget SNBT from scratch or changing the ``ajjgui.widget`` SNBT is therefore not recommended.
 
 > [!IMPORTANT]

@@ -1,6 +1,6 @@
 # A Neural Network Deployment Library for Minecraft Mapmaking
 
-> **AVAILABLE ON 1.21.9**
+> **AVAILABLE ON 1.21.11**
 >
 > **Click [here](https://github.com/AjjMC/ajjnn/archive/refs/heads/main.zip) to download.**
 >
@@ -19,7 +19,7 @@
 
 ## Overview
 
-This datapack allows mapmakers to deploy neural networks of arbitrary widths and depths in Minecraft. It functions as a black box that performs inference dynamically for a given model, without requiring any modifications to be made. A Python script is provided, converting trained PyTorch models to standalone mcfunction files used to load them into the game.
+This datapack allows mapmakers to deploy neural networks of arbitrary widths and depths in Minecraft. It functions as a black box that performs inference dynamically for a given model, and the user is not expected to modify any files. A Python script is provided, converting trained PyTorch models to standalone mcfunction files used to load them into the game.
 
 ## Installing
 

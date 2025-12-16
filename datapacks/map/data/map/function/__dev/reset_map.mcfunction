@@ -1,19 +1,13 @@
 defaultgamemode adventure
 
-gamerule commandBlockOutput false
-gamerule doDaylightCycle false
-gamerule doImmediateRespawn true
-gamerule doTileDrops false
-gamerule doWeatherCycle false
-gamerule fallDamage false
-gamerule keepInventory true
-gamerule locatorBar false
-gamerule pvp false
-gamerule reducedDebugInfo false
-gamerule sendCommandFeedback false
-gamerule showDeathMessages true
-gamerule spawnRadius 0
-gamerule spectatorsGenerateChunks false
+gamerule minecraft:advance_time false
+gamerule minecraft:advance_weather false
+gamerule minecraft:fall_damage false
+gamerule minecraft:locator_bar false
+gamerule minecraft:pvp false
+gamerule minecraft:reduced_debug_info true
+gamerule minecraft:respawn_radius 0
+gamerule minecraft:spectators_generate_chunks false
 
 scoreboard objectives add map.hunger food
 
@@ -23,7 +17,7 @@ scoreboard players reset #count map.global
 scoreboard players reset #length map.global
 scoreboard players reset #max map.global
 scoreboard players reset #position map.global
-scoreboard players reset #temp map.global
+scoreboard players reset #value map.global
 
 setworldspawn 0 63 0
 
