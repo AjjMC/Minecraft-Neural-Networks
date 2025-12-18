@@ -8,5 +8,4 @@ function map:demo/argmax_vector
 data remove storage map:data out
 data remove storage map:data values
 
-data remove block 3 63 3 lock
-function ajjgui:_reload
+function map:general/unlock_settings_gui
