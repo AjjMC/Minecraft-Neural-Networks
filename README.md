@@ -6,9 +6,15 @@
 >
 > **For any queries, please use the issues section.**
 
-> **RECOGNIZED BY MOJANG**
+> **FEATURED BY MOJANG**
 >
-> **Featured on the official Minecraft Realms as part of the ["Survival: The Remix" release](https://www.minecraft.net/en-us/article/new-on-java-realms-survival-the-remix) (April 2025)!**
+> **[Java Realms Release](https://www.minecraft.net/en-us/article/new-on-java-realms-survival-the-remix)**
+>
+> **Published on Java Realms in April, 2025.**
+>
+> **[Realms Mapmaker Awards: Most Innovative 2025](https://www.minecraft.net/en-us/article/java-realms-mapmaker-awards)**
+>
+> **Recognized for "pushing the envelope in mapmaking, either by technological advancements, experimental game implementation, pioneering new narrative techniques, or delivering entirely new experiences that the Minecraft world has seldom seen beforehand".**
 
 <p align = "center">
   <img src="repo/general/thumbnail.png" width="100%">
