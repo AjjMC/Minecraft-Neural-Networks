@@ -9,8 +9,6 @@ gamerule minecraft:reduced_debug_info true
 gamerule minecraft:respawn_radius 0
 gamerule minecraft:spectators_generate_chunks false
 
-scoreboard objectives add map.hunger food
-
 scoreboard objectives add map.global dummy
 
 scoreboard players reset #count map.global
@@ -21,7 +19,7 @@ scoreboard players reset #value map.global
 
 setworldspawn 0 63 0
 
-time set day
+time set minecraft:day
 
 fill 11 63 42 -12 86 40 minecraft:polished_andesite
 fill 9 65 42 -10 84 40 minecraft:air

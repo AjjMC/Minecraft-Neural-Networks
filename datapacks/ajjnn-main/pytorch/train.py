@@ -1,123 +1,107 @@
-import argparse
-import os
+import logging
 import time
-
-from model import create_model
-from eval import calc_accuracy
+from argparse import ArgumentParser
+from pathlib import Path
 
 import torch
 from torch.utils.data import DataLoader
-import torchvision as tv
+
+from model import get_model
+from utils import calc_accuracy, get_data, get_data_loaders, get_num_features
 
 
 def main(
-    learning_rate: float,
     batch_size: int,
-    num_epochs: int,
-    data_dir: str,
-    checkpoint_dir: str,
+    checkpoint_dir: Path,
     data: str,
+    data_dir: Path,
+    learning_rate: float,
+    num_epochs: int,
 ) -> None:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    if "emnist" in data:
-        emnist_split = data.split("_")[1]
+    train_data, test_data = get_data(data=data, data_dir=data_dir)
 
-        train_data = tv.datasets.EMNIST(
-            root=data_dir,
-            split=emnist_split,
-            train=True,
-            transform=tv.transforms.Compose(
-                [
-                    lambda image: tv.transforms.functional.rotate(image, -90),
-                    lambda image: tv.transforms.functional.hflip(image),
-                    tv.transforms.ToTensor(),
-                ]
-            ),
-            download=True,
-        )
-
-        test_data = tv.datasets.EMNIST(
-            root=data_dir,
-            split=emnist_split,
-            train=False,
-            transform=tv.transforms.Compose(
-                [
-                    lambda image: tv.transforms.functional.rotate(image, -90),
-                    lambda image: tv.transforms.functional.hflip(image),
-                    tv.transforms.ToTensor(),
-                ]
-            ),
-            download=True,
-        )
-
-    elif data == "cifar10":
-        train_data = tv.datasets.CIFAR10(
-            root=data_dir, train=True, transform=tv.transforms.ToTensor(), download=True
-        )
-
-        test_data = tv.datasets.CIFAR10(
-            root=data_dir,
-            train=False,
-            transform=tv.transforms.ToTensor(),
-            download=True,
-        )
-
-    elif data == "cifar100":
-        train_data = tv.datasets.CIFAR100(
-            root=data_dir, train=True, transform=tv.transforms.ToTensor(), download=True
-        )
-
-        test_data = tv.datasets.CIFAR100(
-            root=data_dir,
-            train=False,
-            transform=tv.transforms.ToTensor(),
-            download=True,
-        )
-
-    num_features = (
-        train_data[0][0].shape[0]
-        * train_data[0][0].shape[1]
-        * train_data[0][0].shape[2]
+    train_data_loader, test_data_loader = get_data_loaders(
+        train_data=train_data, test_data=test_data, batch_size=batch_size
     )
 
-    classes = train_data.classes
+    num_features = get_num_features(test_data=test_data)
+
+    classes = test_data.classes
     num_classes = len(classes)
 
-    os.makedirs(checkpoint_dir, exist_ok=True)
+    model, optimizer, checkpoint_num = laod_epoch(
+        data=data,
+        num_features=num_features,
+        num_classes=num_classes,
+        learning_rate=learning_rate,
+        checkpoint_dir=checkpoint_dir,
+        device=device,
+    )
 
-    checkpoint_list = os.listdir(checkpoint_dir)
+    num_params = sum(p.numel() for p in model.parameters())
+
+    logger.info("%s, Classes (%d): %s", data, num_classes, classes)
+    logger.info("Number of Parameters: %d", num_params)
+    logger.info("Training on %s", device)
+
+    train_model(
+        model=model,
+        optimizer=optimizer,
+        train_data_loader=train_data_loader,
+        test_data_loader=test_data_loader,
+        num_features=num_features,
+        num_epochs=num_epochs,
+        checkpoint_num=checkpoint_num,
+        checkpoint_dir=checkpoint_dir,
+        device=device,
+    )
+
+
+def laod_epoch(
+    data: str,
+    num_features: int,
+    num_classes: int,
+    learning_rate: float,
+    checkpoint_dir: Path,
+    device: torch.device,
+) -> tuple[torch.nn.Module, torch.optim.Optimizer, int]:
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+
+    checkpoint_list = list(checkpoint_dir.glob("epoch_*.pt"))
     checkpoint_list = sorted(
-        checkpoint_list, key=lambda x: int(x.split("_")[-1].split(".")[0])
+        checkpoint_list, key=lambda x: int(x.name.split("_")[-1].split(".")[0])
     )
 
     if len(checkpoint_list) == 0:
-        model = create_model(num_features, num_classes, data)
+        model = get_model(data, num_features, num_classes)
         model = model.to(device)
 
         optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
         checkpoint_num = 0
     else:
-        checkpoint_file = checkpoint_list[-1]
-        checkpoint_path = os.path.join(checkpoint_dir, checkpoint_file)
+        checkpoint_path = checkpoint_list[-1]
 
         model, optimizer = torch.load(checkpoint_path, weights_only=False)
 
-        checkpoint_num = int(checkpoint_file.split("_")[-1].split(".")[0]) + 1
+        checkpoint_num = int(checkpoint_path.name.split("_")[-1].split(".")[0]) + 1
 
-    num_params = sum(p.numel() for p in model.parameters())
+    return model, optimizer, checkpoint_num
 
-    train_data_loader = DataLoader(
-        dataset=train_data, batch_size=batch_size, shuffle=True
-    )
 
-    test_data_loader = DataLoader(dataset=test_data, batch_size=batch_size)
-
-    print(f"{data}, {num_classes} Classes: {classes}", flush=True)
-    print("Number of Parameters:", num_params, flush=True)
-    print("Training on", device, flush=True)
-
+def train_model(
+    model: torch.nn.Module,
+    optimizer: torch.optim.Optimizer,
+    train_data_loader: DataLoader,
+    test_data_loader: DataLoader,
+    num_features: int,
+    num_epochs: int,
+    checkpoint_num: int,
+    checkpoint_dir: Path,
+    device: torch.device,
+) -> list[float]:
     accuracies = []
 
     for epoch in range(checkpoint_num, checkpoint_num + num_epochs):
@@ -149,55 +133,57 @@ def main(
 
         avg_loss /= len_data_loader
 
-        accuracy = calc_accuracy(model, test_data_loader)
+        accuracy = calc_accuracy(model, test_data_loader, num_features, device)
 
         accuracies.append(accuracy)
 
         duration = round(time.perf_counter() - start)
 
-        print(
-            f"Epoch: {epoch}, Train Loss: {avg_loss:.4f}, Test Accuracy: {accuracy:.2f}%, Duration: {duration} s",
-            flush=True,
+        logger.info(
+            "Epoch: %d, Train Loss: %.4f, Test Accuracy: %.2f%%, Duration: %d s",
+            epoch,
+            avg_loss,
+            accuracy,
+            duration,
         )
 
-        torch.save(
-            (model, optimizer), os.path.join(checkpoint_dir, f"epoch_{epoch}.pt")
-        )
+        torch.save((model, optimizer), checkpoint_dir / f"epoch_{epoch}.pt")
 
     best_epoch, best_accuracy = max(enumerate(accuracies), key=lambda x: x[1])
     best_epoch += checkpoint_num
 
-    print(f"Best Epoch: {best_epoch}, Test Accuracy: {best_accuracy:.2f}%", flush=True)
+    logger.info("Best Epoch: %d, Test Accuracy: %.2f%%", best_epoch, best_accuracy)
 
 
 if __name__ == "__main__":
-    args = argparse.ArgumentParser()
+    args = ArgumentParser()
 
-    args.add_argument("--learning_rate", type=float, default=1e-3)
     args.add_argument("--batch_size", type=int, default=64)
-    args.add_argument("--num_epochs", type=int, default=10)
-    args.add_argument("--data_dir", type=str, default="data")
-    args.add_argument("--checkpoint_dir", type=str, default="checkpoints")
+    args.add_argument("--checkpoint_dir", type=Path, default="checkpoints")
     args.add_argument(
         "--data",
         type=str,
-        choices=[
-            "emnist_balanced",
-            "emnist_letters",
-            "emnist_digits",
-            "cifar10",
-            "cifar100",
-        ],
+        choices=["emnist_balanced", "emnist_letters", "emnist_digits"],
         default="emnist_digits",
     )
+    args.add_argument("--data_dir", type=Path, default="data")
+    args.add_argument("--learning_rate", type=float, default=1e-3)
+    args.add_argument("--num_epochs", type=int, default=10)
 
     args = args.parse_args()
 
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(message)s",
+    )
+
+    logger = logging.getLogger(__name__)
+
     main(
-        learning_rate=args.learning_rate,
         batch_size=args.batch_size,
-        num_epochs=args.num_epochs,
-        data_dir=args.data_dir,
         checkpoint_dir=args.checkpoint_dir,
         data=args.data,
+        data_dir=args.data_dir,
+        learning_rate=args.learning_rate,
+        num_epochs=args.num_epochs,
     )
