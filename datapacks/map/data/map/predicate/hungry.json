@@ -2,10 +2,12 @@
   "condition": "minecraft:entity_properties",
   "entity": "this",
   "predicate": {
-    "type": "minecraft:player",
-    "food": {
-      "level": {
-        "max": 19
+    "type_specific": {
+      "type": "minecraft:player",
+      "food": {
+        "level": {
+          "max": 19
+        }
       }
     }
   }
