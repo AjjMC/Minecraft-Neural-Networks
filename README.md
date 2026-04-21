@@ -12,7 +12,7 @@
 >
 > **Published on Java Realms in April, 2025.**
 >
-> **[Realms Mapmaker Awards: Most Innovative 2025](https://www.minecraft.net/en-us/article/java-realms-mapmaker-awards)**
+> **[Realms Mapmaker Awards: Most Innovative Map 2025 (Nominee)](https://www.minecraft.net/en-us/article/java-realms-mapmaker-awards)**
 >
 > **Recognized for "pushing the envelope in mapmaking, either by technological advancements, experimental game implementation, pioneering new narrative techniques, or delivering entirely new experiences that the Minecraft world has seldom seen beforehand".**
 
