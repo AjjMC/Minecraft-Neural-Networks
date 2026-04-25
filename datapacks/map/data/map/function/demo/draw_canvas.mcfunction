@@ -1,4 +1,4 @@
-execute unless block ~ ~ ~ minecraft:air run return run function map:demo/draw_canvas_block
+execute if block ~ ~ ~ #map:canvas run return run function map:demo/draw_canvas_block
 
 execute if entity @s[distance=..64] positioned ^ ^ ^0.5 run function map:demo/draw_canvas
 

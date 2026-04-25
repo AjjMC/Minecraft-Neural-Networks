@@ -1,4 +1,4 @@
-execute if block ~ ~ ~ minecraft:black_concrete run return run function map:demo/erase_canvas_block
+execute if block ~ ~ ~ #map:canvas run return run function map:demo/erase_canvas_block
 
 execute if entity @s[distance=..64] positioned ^ ^ ^0.5 run function map:demo/erase_canvas
 
