@@ -1,4 +1,4 @@
-fill ~-0.75 ~-0.75 ~ ~0.75 ~0.75 ~ minecraft:black_concrete replace minecraft:white_concrete
+execute unless block ~ ~ ~ minecraft:air run return run function map:demo/draw_canvas_block
 
 execute if entity @s[distance=..64] positioned ^ ^ ^0.5 run function map:demo/draw_canvas
 

@@ -5,13 +5,13 @@
       "conditions": {
         "item": {
           "predicates": {
-            "minecraft:custom_data": "{map:{blank:1b}}"
+            "minecraft:custom_data": "{map:{clear_canvas_button:1b}}"
           }
         }
       }
     }
   },
   "rewards": {
-    "function": "map:demo/clear_canvas"
+    "function": "map:gui/hotbar/clear_canvas"
   }
 }
